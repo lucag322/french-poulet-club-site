@@ -429,13 +429,14 @@
   /* ---------- Pied : infos en colonnes, coq sur sa ligne, « Bon appétit, Stockholm. » géant coupé par le bas ---------- */
   footer{background:var(--nuit);color:#fff;padding-top:56px;overflow:hidden;container-type:inline-size}
   .pied-haut{max-width:none}
-  .resume{max-width:40ch;font-size:16px;opacity:.75}
-  .pied-cols{display:grid;grid-template-columns:1fr 1fr;gap:28px 20px;margin-top:36px}
-  .pied-cols .kicker{font-size:11px;opacity:.55;margin-bottom:10px}
-  .pied-cols p:not(.kicker){font-size:16px;line-height:1.7}
-  .pied-cols a{text-decoration:none;display:inline-block}
-  .pied-cols a:active{opacity:.6}
-  .pied-cols .pseudo{opacity:.55;font-size:14px}
+  .pied-haut .kicker{opacity:.6}
+  .resume{max-width:44ch;margin-top:14px;font-size:15px;opacity:.6}
+  .grandes{list-style:none;margin-top:32px;border-bottom:1px solid rgba(255,255,255,.2)}
+  .grandes a{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 0;border-top:1px solid rgba(255,255,255,.2);text-decoration:none}
+  .grandes b{display:block;font:800 clamp(30px,9vw,80px)/1 var(--titre);text-transform:uppercase;letter-spacing:-.02em;transition:transform .3s var(--ressort)}
+  .grandes small{display:block;margin-top:8px;font-size:14px;opacity:.6}
+  .grandes svg{flex:none;width:clamp(26px,6vw,56px);height:auto;transition:transform .3s var(--ressort)}
+  .grandes a:active b{transform:translateX(6px)}
   .copy{margin-top:36px;font-size:13px;opacity:.5}
   footer .sol{--w:96px;margin-top:40px}
   .geant{padding:.38em var(--gutter) 0;margin-bottom:-.09em;font:800 calc((100cqi - 2*var(--gutter))/8.6)/.95 var(--titre);text-transform:uppercase;letter-spacing:-.02em;white-space:nowrap}
@@ -451,7 +452,6 @@
     .ctas .btn{flex:0 0 auto}
     .suivre .reseaux .btn{flex:0 0 auto}
     .cb-zone{max-width:520px}
-    .pied-cols{grid-template-columns:repeat(3,1fr)}
   }
 
   /* ================= Bureau ================= */
@@ -479,9 +479,8 @@
     .face{border-radius:24px}
     .recto .haut{font-size:16px}.recto .bas{font-size:14px}.recto .bas b{font-size:20px}
     footer{padding-top:88px}
-    .resume{font-size:17px}
-    .pied-cols{grid-template-columns:repeat(5,1fr);margin-top:48px}
-    .pied-cols p:not(.kicker){font-size:17px}
+    .grandes a{padding:26px 0}
+    .grandes small{font-size:15px}
     footer .sol{--w:130px;margin-top:64px}
   }
 
@@ -490,7 +489,8 @@
     .liens a:not(.btn):hover{text-decoration:underline;text-underline-offset:4px}
     .btn:hover{transform:translateY(-2px) rotate(-2deg);box-shadow:0 6px 0 var(--nuit)}
     .ligne{transition:padding .2s}.ligne:hover{padding-left:8px}
-    .pied-cols a:hover{text-decoration:underline;text-underline-offset:4px}
+    .grandes a:hover b{transform:translateX(12px)}
+    .grandes a:hover svg{transform:translate(6px,-6px) rotate(8deg)}
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -661,14 +661,13 @@
 <!-- ======================= PIED ======================= -->
 <footer id="find-us">
   <div class="wrap pied-haut">
-    <p class="resume">French rotisserie chicken in Stockholm. Marinated 24 hours, oven-roasted, served fast, with French sides and sauces. No pork.</p>
-    <div class="pied-cols">
-      <div><p class="kicker">Where</p><p>Stockholm, Sweden<br>Exact address soon</p></div>
-      <div><p class="kicker">When</p><p>Opening<br>spring 2028</p></div>
-      <div><p class="kicker">Follow</p><p><a href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener">Instagram</a><br><a href="https://www.tiktok.com/@frenchpouletclub" target="_blank" rel="noopener">TikTok</a><br><span class="pseudo">@frenchpouletclub</span></p></div>
-      <div><p class="kicker">Say hej</p><p><a href="mailto:hello@frenchpouletclub.com">hello@<wbr>frenchpouletclub.com</a></p></div>
-      <div><p class="kicker">On this page</p><p><a href="#menu">Menu</a><br><a href="#card">Club card</a><br><a href="#follow">Be there first</a></p></div>
-    </div>
+    <p class="kicker">Stockholm · Opening spring 2028</p>
+    <p class="resume">French rotisserie chicken in Stockholm. Marinated 24 hours, oven-roasted, served fast, with French sides and sauces. No pork. Exact address soon.</p>
+    <ul class="grandes">
+      <li><a href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener"><span><b>Instagram</b><small>@frenchpouletclub</small></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg></a></li>
+      <li><a href="https://www.tiktok.com/@frenchpouletclub" target="_blank" rel="noopener"><span><b>TikTok</b><small>@frenchpouletclub</small></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg></a></li>
+      <li><a href="mailto:hello@frenchpouletclub.com"><span><b>Say hej</b><small>hello@frenchpouletclub.com</small></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg></a></li>
+    </ul>
     <p class="copy">© 2026 French Poulet Club</p>
   </div>
   <div class="sol"><i></i><button class="coq-btn" type="button" aria-label="Make the rooster run"><svg viewBox="0 0 214 166" aria-hidden="true"><use href="#coq-sol"/></svg><span class="eclats" aria-hidden="true"><i style="--k:-2"></i><i style="--k:-1"></i><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i></span></button><i></i></div>
