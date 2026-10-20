@@ -23,7 +23,8 @@ jobs:
           cp -R index.html favicon.svg fonts img dist/
           sed -i 's|<meta charset="utf-8">|<meta charset="utf-8">\n<meta name="robots" content="noindex, nofollow">|' dist/index.html
           printf 'User-agent: *\nDisallow: /\n' > dist/robots.txt
-          echo "stage.frenchpouletclub.com" > dist/CNAME
+          # Sous-domaine branché seulement quand le DNS est prêt (variable de dépôt STAGE_DOMAIN)
+          if [ -n "${{ vars.STAGE_DOMAIN }}" ]; then echo "${{ vars.STAGE_DOMAIN }}" > dist/CNAME; fi
 
       - uses: peaceiris/actions-gh-pages@v4
         with:

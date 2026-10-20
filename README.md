@@ -22,7 +22,7 @@ Le site de test est publié dans le dépôt `lucag322/french-poulet-club-stage` 
 
 ## DNS
 
-- `stage` : enregistrement CNAME vers `lucag322.github.io`
+- `stage` : enregistrement CNAME vers `lucag322.github.io`, puis définir la variable de dépôt `STAGE_DOMAIN=stage.frenchpouletclub.com`. Sans elle, le test est sur https://lucag322.github.io/french-poulet-club-stage/
 - Prod (plus tard) : voir la doc GitHub Pages pour un domaine apex (4 enregistrements A + AAAA), puis définir la variable de dépôt `PROD_DOMAIN`.
 
 ## Licences
