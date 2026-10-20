@@ -426,15 +426,19 @@
   .suivre p.pseudo{margin-top:14px;font:800 13px/1 var(--titre);opacity:.7}
 
   /* ---------- Pied ---------- */
-  footer{background:var(--nuit);color:#fff;padding-top:72px}
-  footer h2.t{font-size:clamp(34px,10vw,128px)}
-  .resume{max-width:44ch;margin-top:20px;font-size:17px;opacity:.8}
-  .infos{display:grid;gap:28px;margin-top:40px}
-  .infos .kicker{opacity:.6;margin-bottom:8px}
-  .infos p{font-size:17px}
-  .infos a{display:inline-block;padding:6px 0;text-decoration:none;border-bottom:2px solid currentColor}
-  footer .sol{--w:110px;margin-top:72px}
-  .mentions{display:flex;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;padding:18px var(--gutter) calc(22px + env(safe-area-inset-bottom));font-size:13px;opacity:.6}
+  /* ---------- Pied : infos compactes, coq sur sa ligne, nom géant coupé par le bas ---------- */
+  footer{background:var(--nuit);color:#fff;padding-top:56px;overflow:hidden;container-type:inline-size}
+  .pied-haut{display:grid;gap:24px;max-width:none}
+  .resume{max-width:40ch;font-size:16px;opacity:.75}
+  .pied-infos{list-style:none;display:flex;flex-wrap:wrap;gap:10px}
+  .pied-infos a,.pied-infos span{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;border:2px solid rgba(255,255,255,.3);border-radius:99px;font:800 11px/1 var(--titre);text-transform:uppercase;text-decoration:none;transition:border-color .2s,background .2s,color .2s}
+  .pied-infos span{border-color:#fff}
+  .pied-infos span b{width:7px;height:7px;border-radius:50%;background:var(--rouge)}
+  .pied-infos a:active{background:#fff;color:var(--nuit)}
+  .copy{font-size:13px;opacity:.5}
+  footer .sol{--w:96px;margin-top:44px}
+  .geant{padding:20px var(--gutter) 0;margin-bottom:-.12em;font:800 calc((100cqi - 2*var(--gutter))/5.3)/.88 var(--titre);text-transform:uppercase;letter-spacing:-.02em;white-space:nowrap}
+  .geant span{display:block}
 
   /* ---------- Apparition au scroll ---------- */
   .js .rev{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1)}
@@ -446,7 +450,8 @@
     .ctas .btn{flex:0 0 auto}
     .suivre .reseaux .btn{flex:0 0 auto}
     .cb-zone{max-width:520px}
-    .infos{grid-template-columns:repeat(3,1fr)}
+    .geant{font-size:calc((100cqi - 2*var(--gutter))/10.5)}
+    .geant span:nth-child(-n+2){display:inline}
   }
 
   /* ================= Bureau ================= */
@@ -473,9 +478,12 @@
     .cb-zone{margin-top:0}
     .face{border-radius:24px}
     .recto .haut{font-size:16px}.recto .bas{font-size:14px}.recto .bas b{font-size:20px}
-    footer{padding-top:120px}
-    .infos{margin-top:56px}
-    footer .sol{--w:150px;margin-top:88px}
+    footer{padding-top:88px}
+    .pied-haut{grid-template-columns:1fr auto;align-items:end;gap:24px 56px}
+    .resume{font-size:17px}
+    .pied-infos{justify-content:flex-end}
+    .copy{grid-column:1/-1}
+    footer .sol{--w:130px;margin-top:64px}
   }
 
   /* Survol : seulement avec une souris */
@@ -483,6 +491,7 @@
     .liens a:not(.btn):hover{text-decoration:underline;text-underline-offset:4px}
     .btn:hover{transform:translateY(-2px) rotate(-2deg);box-shadow:0 6px 0 var(--nuit)}
     .ligne{transition:padding .2s}.ligne:hover{padding-left:8px}
+    .pied-infos a:hover{border-color:#fff}
   }
 
   @media (prefers-reduced-motion:reduce){
@@ -652,17 +661,18 @@
 
 <!-- ======================= PIED ======================= -->
 <footer id="find-us">
-  <div class="wrap">
-    <h2 class="t rev">Bon appétit,<br>Stockholm.</h2>
-    <p class="resume rev">French rotisserie chicken in Stockholm. Marinated 24 hours, oven-roasted, served fast, with French sides and sauces. No pork.</p>
-    <div class="infos">
-      <div><p class="kicker">Where</p><p>Stockholm.<br>Exact address soon.</p></div>
-      <div><p class="kicker">When</p><p>Opening spring 2028.</p></div>
-      <div><p class="kicker">Say hej</p><p><a href="mailto:hello@frenchpouletclub.com">hello@frenchpouletclub.com</a><br><a href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener">Instagram</a><br><a href="https://www.tiktok.com/@frenchpouletclub" target="_blank" rel="noopener">TikTok</a></p></div>
-    </div>
+  <div class="wrap pied-haut">
+    <p class="resume">French rotisserie chicken in Stockholm. Marinated 24 hours, oven-roasted, served fast, with French sides and sauces. No pork.</p>
+    <ul class="pied-infos">
+      <li><span><b></b>Stockholm · Spring 2028</span></li>
+      <li><a href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://www.tiktok.com/@frenchpouletclub" target="_blank" rel="noopener">TikTok</a></li>
+      <li><a href="mailto:hello@frenchpouletclub.com">hello@frenchpouletclub.com</a></li>
+    </ul>
+    <p class="copy">© 2026 French Poulet Club · Exact address soon.</p>
   </div>
   <div class="sol"><i></i><button class="coq-btn" type="button" aria-label="Make the rooster run"><svg viewBox="0 0 214 166" aria-hidden="true"><use href="#coq-sol"/></svg><span class="eclats" aria-hidden="true"><i style="--k:-2"></i><i style="--k:-1"></i><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i></span></button><i></i></div>
-  <div class="mentions"><span>© 2026 French Poulet Club</span><span>Stockholm · 2028</span></div>
+  <p class="geant" aria-hidden="true"><span>French</span> <span>Poulet</span> <span>Club.</span></p>
 </footer>
 
 <script>
@@ -675,10 +685,13 @@
 
   // Ombre de la barre dès qu'on défile
   const barre = $('#barre');
-  let avant = scrollY;
+  // Après un clic sur un lien du menu, la barre reste visible pendant tout le défilement jusqu'à la section
+  let avant = scrollY, ancre = false, finAncre;
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', () => { ancre = true; barre.classList.remove('cache'); clearTimeout(finAncre); finAncre = setTimeout(() => ancre = false, 1200); }));
   addEventListener('scroll', () => {
     const y = scrollY;
     barre.classList.toggle('ombre', y > 8);
+    if (ancre) { avant = y; clearTimeout(finAncre); finAncre = setTimeout(() => ancre = false, 200); return; }
     if (Math.abs(y - avant) < 6) return;
     barre.classList.toggle('cache', y > avant && y > 120);
     avant = y;
