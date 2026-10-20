@@ -251,7 +251,8 @@
   ]
  },
  "sameAs": [
-  "https://www.instagram.com/frenchpouletclub/"
+  "https://www.instagram.com/frenchpouletclub/",
+  "https://www.tiktok.com/@frenchpouletclub"
  ]
 }
 </script>
@@ -333,7 +334,7 @@
   .panneau.ouvert li:nth-child(2) a{transition-delay:.05s}
   .panneau.ouvert li:nth-child(3) a{transition-delay:.1s}
   .panneau.ouvert li:nth-child(4) a{transition-delay:.15s}
-  .panneau .btn{margin-top:32px;align-self:flex-start}
+  .panneau .reseaux{display:flex;gap:12px;margin-top:32px}
   .panneau .sol{margin:auto calc(-1*var(--gutter)) 0;width:calc(100% + 2*var(--gutter));padding-bottom:24px;--w:110px}
 
   /* ---------- Hero ---------- */
@@ -419,8 +420,10 @@
   .supergraphie{position:absolute;right:-70%;bottom:-10%;width:210%;max-width:none;color:var(--clair);pointer-events:none}
   .suivre .wrap{position:relative}
   .suivre h2{margin-top:14px}
-  .suivre p:not(.kicker){max-width:36ch;font-size:17px;margin-top:18px}
-  .suivre .btn{margin-top:32px;width:100%}
+  .suivre p:not(.kicker):not(.pseudo){max-width:36ch;font-size:17px;margin-top:18px}
+  .suivre .reseaux{display:flex;gap:12px;margin-top:32px}
+  .suivre .reseaux .btn{flex:1}
+  .suivre p.pseudo{margin-top:14px;font:800 13px/1 var(--titre);opacity:.7}
 
   /* ---------- Pied ---------- */
   footer{background:var(--nuit);color:#fff;padding-top:72px}
@@ -441,7 +444,7 @@
   @media (min-width:640px){
     :root{--gutter:40px}
     .ctas .btn{flex:0 0 auto}
-    .suivre .btn{width:auto}
+    .suivre .reseaux .btn{flex:0 0 auto}
     .cb-zone{max-width:520px}
     .infos{grid-template-columns:repeat(3,1fr)}
   }
@@ -463,7 +466,7 @@
     .cat{margin-top:0}
     .ligne .nm,.ligne .pr,.liste{font-size:clamp(20px,2.3vw,32px)}
     .supergraphie{right:-18vw;bottom:-8vw;width:max(900px,90vw)}
-    .suivre p:not(.kicker){font-size:19px}
+    .suivre p:not(.kicker):not(.pseudo){font-size:19px}
     .fid{padding:130px 0}
     .fid .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
     .fid p.txt{font-size:19px}
@@ -527,7 +530,7 @@
     <li><a href="#follow">Follow us</a></li>
     <li><a href="#find-us">Find us</a></li>
   </ul>
-  <a class="btn" href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener">Instagram</a>
+  <div class="reseaux"><a class="btn" href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener">Instagram</a><a class="btn creux" href="https://www.tiktok.com/@frenchpouletclub" target="_blank" rel="noopener">TikTok</a></div>
   <div class="sol" aria-hidden="true"><i></i><svg viewBox="0 0 214 166"><use href="#coq-sol"/></svg><i></i></div>
 </nav>
 
@@ -641,7 +644,8 @@
     <p class="kicker rev">#FPC</p>
     <h2 class="t rev" id="t-suivre">Be there<br>first.</h2>
     <p class="rev">The oven is not on yet. Follow us for the address, the opening day and the first tastings.</p>
-    <a class="btn rev" href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener">Follow @frenchpouletclub</a>
+    <div class="reseaux rev"><a class="btn" href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener">Instagram</a><a class="btn creux" href="https://www.tiktok.com/@frenchpouletclub" target="_blank" rel="noopener">TikTok</a></div>
+    <p class="pseudo rev">@frenchpouletclub</p>
   </div>
 </section>
 </main>
@@ -654,7 +658,7 @@
     <div class="infos">
       <div><p class="kicker">Where</p><p>Stockholm.<br>Exact address soon.</p></div>
       <div><p class="kicker">When</p><p>Opening spring 2028.</p></div>
-      <div><p class="kicker">Say hej</p><p><a href="mailto:hello@frenchpouletclub.com">hello@frenchpouletclub.com</a><br><a href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener">Instagram</a></p></div>
+      <div><p class="kicker">Say hej</p><p><a href="mailto:hello@frenchpouletclub.com">hello@frenchpouletclub.com</a><br><a href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener">Instagram</a><br><a href="https://www.tiktok.com/@frenchpouletclub" target="_blank" rel="noopener">TikTok</a></p></div>
     </div>
   </div>
   <div class="sol"><i></i><button class="coq-btn" type="button" aria-label="Make the rooster run"><svg viewBox="0 0 214 166" aria-hidden="true"><use href="#coq-sol"/></svg><span class="eclats" aria-hidden="true"><i style="--k:-2"></i><i style="--k:-1"></i><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i></span></button><i></i></div>
