@@ -1,0 +1,37 @@
+# Branche stage : publie le site sur stage.frenchpouletclub.com (dépôt french-poulet-club-stage).
+# Le site de test n'est pas indexé par les moteurs de recherche.
+name: Stage
+
+on:
+  push:
+    branches: [stage]
+  workflow_dispatch:
+
+concurrency:
+  group: stage
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          mkdir dist
+          cp -R index.html favicon.svg fonts img dist/
+          sed -i 's|<meta charset="utf-8">|<meta charset="utf-8">\n<meta name="robots" content="noindex, nofollow">|' dist/index.html
+          printf 'User-agent: *\nDisallow: /\n' > dist/robots.txt
+          echo "stage.frenchpouletclub.com" > dist/CNAME
+
+      - uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.STAGE_DEPLOY_KEY }}
+          external_repository: lucag322/french-poulet-club-stage
+          publish_branch: gh-pages
+          publish_dir: ./dist
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
+          commit_message: "Stage ${{ github.sha }}"

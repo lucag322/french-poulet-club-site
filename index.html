@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>French Poulet Club · Stockholm</title>
+<meta name="description" content="French roast chicken in Stockholm. Opening spring 2028.">
+<meta property="og:title" content="French Poulet Club">
+<meta property="og:description" content="French roast chicken in Stockholm. Opening spring 2028.">
+<meta property="og:image" content="img/photo-cuisse.jpg">
+<meta name="theme-color" content="#0055A4">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/unbounded-800.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  /* Unbounded ExtraBold : instance statique sans chevauchement de contours (licence OFL, fonts/OFL.txt) */
+  @font-face{font-family:"Unbounded";font-weight:800;font-style:normal;font-display:swap;src:url(fonts/unbounded-800.woff2) format("woff2")}
+
+  :root{
+    --bleu:#0055A4; --nuit:#002654; --lait:#F5F1E8; --rouge:#EF4135; --clair:#3D7CC6; --trait:#D5DCE6; --doux:#5A6B85;
+    --titre:"Unbounded",system-ui,sans-serif; --texte:"DM Sans",system-ui,sans-serif;
+    --gutter:20px; --barre:64px; --rayon:20px;
+    --ressort:cubic-bezier(.3,1.4,.5,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  body{font:400 16px/1.55 var(--texte);color:var(--nuit);background:#fff;-webkit-font-smoothing:antialiased;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+  body.bloque{overflow:hidden}
+  img{display:block;max-width:100%}
+  a{color:inherit}
+  button{font:inherit;color:inherit}
+  :focus-visible{outline:3px solid var(--rouge);outline-offset:3px;border-radius:6px}
+  .t{font-family:var(--titre);font-weight:800;text-transform:uppercase;letter-spacing:-.02em;line-height:1}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 var(--gutter)}
+  section,footer{scroll-margin-top:var(--barre)}
+  .kicker{font:700 12px/1 var(--texte);letter-spacing:.16em;text-transform:uppercase}
+  h2.t{font-size:clamp(38px,11vw,96px)}
+
+  /* ---------- Boutons ---------- */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;border-radius:99px;border:2px solid #fff;background:#fff;color:var(--bleu);font:800 13px/1 var(--titre);text-transform:uppercase;text-decoration:none;white-space:nowrap;transition:transform .2s,box-shadow .2s}
+  .btn.creux{background:transparent;color:#fff}
+  .btn:active{transform:scale(.96)}
+
+  /* ---------- Ligne de sol : coq « sol », sol prolongé d'un bord à l'autre ---------- */
+  .sol{--w:120px;display:flex;align-items:flex-end;width:100%}
+  .sol>svg,.coq-btn{width:var(--w);flex:none}
+  .sol svg{width:var(--w);height:calc(var(--w)*166/214);display:block;overflow:visible}
+  .sol>i{flex:1;height:calc(var(--w)*5/214);margin-bottom:calc(var(--w)*7.5/214);background:currentColor;border-radius:99px}
+  .sol>i:first-of-type{margin-right:calc(var(--w)*-10/214)}
+  .sol>i:last-of-type{margin-left:calc(var(--w)*-10/214)}
+
+  /* ---------- Coq cliquable (hero et pied) : il part en courant sur la ligne ---------- */
+  .sol{position:relative;overflow-x:clip;--pb:0px}
+  .sol.court::before{content:"";position:absolute;left:0;right:0;bottom:calc(var(--pb) + var(--w)*7.5/214);height:calc(var(--w)*5/214);background:currentColor;border-radius:99px}
+  .coq-btn{position:relative;z-index:1;padding:0;border:0;background:none;color:inherit;cursor:pointer;touch-action:manipulation}
+  .coq-btn svg{transform-origin:50% 94%}
+  .coq-btn.coucou svg{animation:coucou .9s ease-in-out}
+  @keyframes coucou{20%{transform:rotate(-5deg)}40%{transform:rotate(4deg)}60%{transform:rotate(-2deg)}80%{transform:none}}
+  .eclats{position:absolute;left:70%;top:14%;width:0;height:0;pointer-events:none}
+  .eclats i{position:absolute;left:-1.5px;top:-8px;width:3px;height:16px;border-radius:3px;background:currentColor;opacity:0;transform:rotate(calc(var(--k)*45deg))}
+  .coq-btn.saute .eclats i{animation:eclat .6s .1s ease-out}
+  @keyframes eclat{0%{opacity:1;transform:rotate(calc(var(--k)*45deg)) translateY(-10px) scaleY(.4)}100%{opacity:0;transform:rotate(calc(var(--k)*45deg)) translateY(-46px) scaleY(1)}}
+  .poussiere{position:absolute;width:calc(var(--w)*.09);aspect-ratio:1;border-radius:50%;background:currentColor;pointer-events:none}
+
+  /* ---------- Barre du haut (collante) ---------- */
+  .barre{position:sticky;top:0;z-index:50;height:calc(var(--barre) + env(safe-area-inset-top));padding:env(safe-area-inset-top) var(--gutter) 0;display:flex;align-items:center;justify-content:space-between;gap:16px;background:var(--bleu);color:#fff;transition:box-shadow .3s}
+  .barre.ombre{box-shadow:0 1px 0 rgba(255,255,255,.15),0 8px 24px -12px rgba(0,38,84,.6)}
+  .logo{display:flex;align-items:center;gap:10px;min-height:44px;text-decoration:none;font:800 13px/1 var(--titre);text-transform:uppercase}
+  .logo svg{width:32px;height:32px}
+  .liens{display:none}
+  .burger{position:relative;z-index:61;width:48px;height:48px;margin-right:-8px;border:0;background:none;cursor:pointer;display:grid;place-items:center}
+  .burger span{position:absolute;width:24px;height:3px;border-radius:3px;background:currentColor;transition:transform .3s var(--ressort),opacity .2s}
+  .burger span:nth-child(1){transform:translateY(-7px)}
+  .burger span:nth-child(3){transform:translateY(7px)}
+  .burger[aria-expanded="true"] span:nth-child(1){transform:rotate(45deg)}
+  .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .burger[aria-expanded="true"] span:nth-child(3){transform:rotate(-45deg)}
+
+  /* Panneau plein écran (mobile) */
+  .panneau{position:fixed;inset:0;z-index:60;background:var(--bleu);color:#fff;display:flex;flex-direction:column;padding:calc(var(--barre) + env(safe-area-inset-top) + 16px) var(--gutter) env(safe-area-inset-bottom);clip-path:circle(0 at calc(100% - 44px) 32px);visibility:hidden;transition:clip-path .55s cubic-bezier(.7,0,.2,1),visibility 0s .55s}
+  .panneau.ouvert{clip-path:circle(150% at calc(100% - 44px) 32px);visibility:visible;transition:clip-path .55s cubic-bezier(.7,0,.2,1)}
+  .panneau ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+  .panneau li a{display:block;padding:10px 0;font:800 clamp(34px,10vw,56px)/1.05 var(--titre);text-transform:uppercase;text-decoration:none;opacity:0;transform:translateY(16px);transition:opacity .3s,transform .4s var(--ressort)}
+  .panneau.ouvert li a{opacity:1;transform:none}
+  .panneau.ouvert li:nth-child(2) a{transition-delay:.05s}
+  .panneau.ouvert li:nth-child(3) a{transition-delay:.1s}
+  .panneau.ouvert li:nth-child(4) a{transition-delay:.15s}
+  .panneau .btn{margin-top:32px;align-self:flex-start}
+  .panneau .sol{margin-top:auto;padding-bottom:24px;--w:110px}
+
+  /* ---------- Hero ---------- */
+  .hero{background:var(--bleu);color:#fff;min-height:calc(100svh - var(--barre));display:flex;flex-direction:column}
+  .hero-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:28px var(--gutter) 0}
+  .badge{display:inline-flex;align-items:center;gap:10px;align-self:flex-start;margin-bottom:22px;padding:8px 14px;border:2px solid #fff;border-radius:99px;font:700 11px/1 var(--texte);letter-spacing:.12em;text-transform:uppercase}
+  .badge b{width:8px;height:8px;border-radius:50%;background:var(--rouge);animation:pulse 1.6s infinite}
+  @keyframes pulse{50%{transform:scale(1.6);opacity:.5}}
+  .hero h1{font-size:clamp(50px,17vw,200px);line-height:.98}
+  .hero h1 span{display:block}
+  .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+  .ctas .btn{flex:1 1 auto;padding:0 18px}
+  .hero .sol{--w:clamp(120px,min(16vw,24vh),230px);--pb:20px;margin-top:36px;padding-bottom:var(--pb)}
+  .hero .sol svg{stroke-dasharray:1;stroke-dashoffset:1;animation:draw 2.4s .4s cubic-bezier(.6,.1,.3,1) forwards}
+  .hero .sol>i{transform:scaleX(0);transform-origin:left;animation:grow .5s cubic-bezier(.3,.1,.3,1) forwards}
+  .hero .sol>i:last-of-type{animation-delay:2.7s}
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes grow{to{transform:scaleX(1)}}
+
+  /* ---------- Bandeau défilant ---------- */
+  .ruban{background:#fff;color:var(--bleu);border-bottom:3px solid var(--bleu);overflow:hidden;padding:16px 0}
+  .ruban div{display:flex;width:max-content;animation:defile 26s linear infinite}
+  .ruban span{display:flex;align-items:center;gap:20px;padding-right:20px;font:800 clamp(20px,3vw,38px)/1 var(--titre);text-transform:uppercase;white-space:nowrap}
+  .ruban svg{width:1.4em;height:1.1em}
+  @keyframes defile{to{transform:translateX(-50%)}}
+
+  /* ---------- Bande de photos qui défile ---------- */
+  .photos{overflow:hidden;background:var(--bleu)}
+  .photos div{display:flex;width:max-content;animation:defile 40s linear infinite}
+  .photos img{width:min(64vw,420px);height:auto;aspect-ratio:1;object-fit:cover;flex:none}
+
+  /* ---------- Menu : affiche typographique ---------- */
+  .menu{background:var(--lait);padding:72px 0}
+  .menu .tete .kicker{color:var(--bleu);margin-top:14px}
+  .affiche{margin-top:40px}
+  .cat{margin-top:44px}
+  .cat:first-child{margin-top:0}
+  .cat>h3{display:flex;justify-content:space-between;gap:12px;padding-bottom:10px;border-bottom:3px solid var(--nuit);font:700 12px/1 var(--texte);letter-spacing:.16em;text-transform:uppercase;color:var(--bleu)}
+  .ligne{display:flex;align-items:baseline;gap:10px;padding:14px 0 12px;border-bottom:1px solid var(--trait)}
+  .ligne .nm{font:800 clamp(17px,5vw,36px)/1.05 var(--titre);text-transform:uppercase;letter-spacing:-.02em}
+  .ligne .ds{display:block;margin-top:5px;font:400 14px/1.3 var(--texte);color:var(--doux);text-transform:none;letter-spacing:0}
+  .ligne .pts{flex:1;min-width:16px;border-bottom:3px dotted var(--clair);transform:translateY(-.3em)}
+  .ligne .pr{font:800 clamp(17px,5vw,36px)/1 var(--titre);color:var(--bleu);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .ligne .pr.soon{font:700 11px/1 var(--texte);letter-spacing:.14em;text-transform:uppercase;color:var(--doux)}
+  .liste{padding:14px 0 12px;border-bottom:1px solid var(--trait);font:800 clamp(17px,5vw,36px)/1.25 var(--titre);text-transform:uppercase;letter-spacing:-.02em}
+  .liste span{color:var(--clair)}
+  .pastille{display:inline-block;vertical-align:.35em;margin-left:8px;padding:4px 8px;border-radius:99px;background:var(--rouge);color:#fff;font:800 10px/1 var(--titre);letter-spacing:.04em}
+  .menu .pied{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:24px;font-size:13px;color:var(--doux)}
+  .menu .pied b{font:800 14px/1.3 var(--titre);color:var(--bleu)}
+
+  /* ---------- Carte du club ---------- */
+  .fid{padding:72px 0}
+  .fid p.txt{font-size:17px;max-width:38ch;margin-top:18px}
+  .fid .aide{margin-top:16px;font-size:14px;color:var(--doux);text-align:center}
+  .cb-zone{margin-top:32px;perspective:1200px}
+  .cb{position:relative;aspect-ratio:85.6/54;transform-style:preserve-3d;transition:transform .9s var(--ressort)}
+  .cb.retournee{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;border-radius:18px;padding:6%;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;justify-content:space-between;color:#fff;box-shadow:0 24px 48px -24px rgba(0,38,84,.6)}
+  .recto{background:var(--bleu)}
+  .verso{background:var(--nuit);transform:rotateY(180deg);align-items:center;justify-content:center;text-align:center;gap:6px}
+  .face .sg{position:absolute;right:-42%;bottom:-62%;width:110%;color:var(--clair);opacity:.8;pointer-events:none}
+  .verso .sg{color:#0B3A73;opacity:1;right:auto;left:-40%}
+  .face>*:not(.sg){position:relative}
+  .recto .haut{display:flex;justify-content:space-between;font:800 12px/1.1 var(--titre);text-transform:uppercase}
+  .tampons{display:grid;grid-template-columns:repeat(6,1fr);gap:3%}
+  .tampons button{aspect-ratio:1;min-width:0;border-radius:50%;border:2px dashed rgba(255,255,255,.75);background:rgba(0,85,164,.6);color:var(--bleu);cursor:pointer;display:grid;place-items:center;transition:transform .2s,background .2s;touch-action:manipulation}
+  .tampons button svg{width:70%;opacity:0;transform:scale(.3) rotate(-30deg);transition:all .35s cubic-bezier(.3,1.6,.5,1)}
+  .tampons button.on{background:#fff;border-style:solid;border-color:#fff}
+  .tampons button.on svg{opacity:1;transform:none}
+  .tampons button:active{transform:scale(.9)}
+  .recto .bas{display:flex;justify-content:space-between;align-items:end;gap:12px;font-size:12px}
+  .recto .bas b{font:800 16px/1 var(--titre)}
+  .verso strong{font:800 clamp(30px,9vw,56px)/1 var(--titre);text-transform:uppercase}
+  .verso span{font-size:clamp(13px,1.6vw,17px);opacity:.85}
+  .verso button{margin-top:10px;min-height:40px;padding:0 18px;border-radius:99px;border:2px solid #fff;background:transparent;font:800 11px/1 var(--titre);text-transform:uppercase;cursor:pointer}
+  .confettis{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden}
+  .confettis i{position:absolute;top:0;left:0;border-radius:2px;will-change:transform,opacity}
+  .confettis svg{position:absolute;top:0;left:0;width:34px;height:27px;color:var(--bleu);will-change:transform,opacity}
+
+  /* ---------- Suivre l'ouverture (supergraphie) ---------- */
+  .suivre{position:relative;background:var(--bleu);color:#fff;padding:88px 0;overflow:hidden}
+  .supergraphie{position:absolute;right:-70%;bottom:-10%;width:210%;max-width:none;color:var(--clair);pointer-events:none}
+  .suivre .wrap{position:relative}
+  .suivre h2{margin-top:14px}
+  .suivre p:not(.kicker){max-width:36ch;font-size:17px;margin-top:18px}
+  .suivre .btn{margin-top:32px;width:100%}
+
+  /* ---------- Pied ---------- */
+  footer{background:var(--nuit);color:#fff;padding-top:72px}
+  footer h2.t{font-size:clamp(34px,10vw,128px)}
+  .infos{display:grid;gap:28px;margin-top:40px}
+  .infos .kicker{opacity:.6;margin-bottom:8px}
+  .infos p{font-size:17px}
+  .infos a{display:inline-block;padding:6px 0;text-decoration:none;border-bottom:2px solid currentColor}
+  footer .sol{--w:110px;margin-top:72px}
+  .mentions{display:flex;justify-content:space-between;gap:8px 16px;flex-wrap:wrap;padding:18px var(--gutter) calc(22px + env(safe-area-inset-bottom));font-size:13px;opacity:.6}
+
+  /* ---------- Apparition au scroll ---------- */
+  .js .rev{opacity:0;transform:translateY(24px);transition:opacity .7s,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .js .rev.vu{opacity:1;transform:none}
+
+  /* ================= Tablette ================= */
+  @media (min-width:640px){
+    :root{--gutter:40px}
+    .ctas .btn{flex:0 0 auto}
+    .suivre .btn{width:auto}
+    .cb-zone{max-width:520px}
+    .infos{grid-template-columns:repeat(3,1fr)}
+  }
+
+  /* ================= Bureau ================= */
+  @media (min-width:960px){
+    :root{--gutter:56px;--barre:76px;--rayon:24px}
+    body{font-size:17px}
+    .logo{font-size:15px}.logo svg{width:36px;height:36px}
+    .burger,.panneau{display:none}
+    .liens{display:flex;align-items:center;gap:28px;font-weight:500}
+    .liens a{text-decoration:none}
+    .liens .btn{min-height:44px}
+    .hero h1{font-size:clamp(48px,min(12vw,19vh),200px)}
+    .menu{padding:130px 0}
+    .suivre{padding:150px 0}
+    .menu .tete{display:flex;justify-content:space-between;align-items:end;gap:24px}
+    .affiche{display:grid;grid-template-columns:1fr 1fr;gap:56px 72px;margin-top:64px}
+    .cat{margin-top:0}
+    .ligne .nm,.ligne .pr,.liste{font-size:clamp(20px,2.3vw,32px)}
+    .supergraphie{right:-18vw;bottom:-8vw;width:max(900px,90vw)}
+    .suivre p:not(.kicker){font-size:19px}
+    .fid{padding:130px 0}
+    .fid .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+    .fid p.txt{font-size:19px}
+    .cb-zone{margin-top:0}
+    .face{border-radius:24px}
+    .recto .haut{font-size:16px}.recto .bas{font-size:14px}.recto .bas b{font-size:20px}
+    footer{padding-top:120px}
+    .infos{margin-top:56px}
+    footer .sol{--w:150px;margin-top:88px}
+  }
+
+  /* Survol : seulement avec une souris */
+  @media (hover:hover){
+    .liens a:not(.btn):hover{text-decoration:underline;text-underline-offset:4px}
+    .btn:hover{transform:translateY(-2px) rotate(-2deg);box-shadow:0 6px 0 var(--nuit)}
+    .ligne{transition:padding .2s}.ligne:hover{padding-left:8px}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .hero .sol svg{stroke-dashoffset:0}
+    .hero .sol>i{transform:none}
+    .js .rev{opacity:1;transform:none}
+  }
+</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="coq" viewBox="14 2 176 176" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C150,126 130,142 117,142 L117,170 L128,170 L117,170 L117,142 L101,142 L101,170 L110,170 L101,170 L101,142 C84,142 61,128 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 C113,40 118,22 129,30 C126,13 142,14 145,31 C148,18 162,26 154,42 C159,43 163,48 163,56 L178,62"/></symbol>
+<symbol id="coq-sol" viewBox="0 4 214 166" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M8,160 L98,160 L98,138 C80,134 60,124 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 C113,40 118,22 129,30 C126,13 142,14 145,31 C148,18 162,26 154,42 C159,43 163,48 163,56 L178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C151,124 140,136 122,138 L122,160 L206,160"/></symbol>
+<symbol id="coq-run" viewBox="0 4 214 166" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M8,160 L84,160 L100,138 C80,134 60,124 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 C113,40 118,22 129,30 C126,13 142,14 145,31 C148,18 162,26 154,42 C159,43 163,48 163,56 L178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C151,124 140,136 122,138 L140,160 L206,160"/> <path d="M121,51 L162,49 M121,51 L106,44 M121,51 L104,56"/> <path d="M14,92 L30,92 M8,110 L32,110 M18,128 L36,128"/></symbol>
+<symbol id="coq-sol-nu" viewBox="0 4 214 166" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M98,160 L98,138 C80,134 60,124 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 C113,40 118,22 129,30 C126,13 142,14 145,31 C148,18 162,26 154,42 C159,43 163,48 163,56 L178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C151,124 140,136 122,138 L122,160"/></symbol>
+<symbol id="coq-run-nu" viewBox="0 4 214 166" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M84,160 L100,138 C80,134 60,124 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 C113,40 118,22 129,30 C126,13 142,14 145,31 C148,18 162,26 154,42 C159,43 163,48 163,56 L178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C151,124 140,136 122,138 L140,160"/> <path d="M121,51 L162,49 M121,51 L106,44 M121,51 L104,56"/> <path d="M14,92 L30,92 M8,110 L32,110 M18,128 L36,128"/></symbol>
+<symbol id="coq-dj" viewBox="0 4 214 166" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M8,160 L28,160 L28,150 L34,150 L34,160 L42,160 L42,138 L48,138 L48,160 L56,160 L56,126 L62,126 L62,160 L70,160 L70,142 L76,142 L76,160 L98,160 L98,138 C80,134 60,124 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 C113,40 118,22 129,30 C126,13 142,14 145,31 C148,18 162,26 154,42 C159,43 163,48 163,56 L178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C151,124 140,136 122,138 L122,160 L146,160 L146,142 L152,142 L152,160 L160,160 L160,126 L166,126 L166,160 L174,160 L174,138 L180,138 L180,160 L188,160 L188,150 L194,150 L194,160 L206,160"/> <path d="M122,52 L140,50"/> <path d="M139,47 L158,46 Q159,57 151,58 L145,58 Q139,57 139,47 Z" fill="currentColor"/></symbol>
+<symbol id="coq-chef" viewBox="0 4 214 166" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M8,160 L98,160 L98,138 C80,134 60,124 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 L122,44 C140,44 160,44 163,56 L178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C151,124 140,136 122,138 L122,160 L206,160"/> <path d="M120,32 C104,32 103,13 118,14 C118,3 134,1 140,8 C146,1 162,3 162,14 C177,13 176,32 160,32"/> <path d="M118,32 H162 V44 H118 Z"/></symbol>
+<symbol id="coq-student" viewBox="0 4 214 166" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M8,160 L98,160 L98,138 C80,134 60,124 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 L122,44 C140,44 160,44 163,56 L178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C151,124 140,136 122,138 L122,160 L206,160"/> <path d="M110,24 L144,12 L178,24 L144,36 Z" fill="var(--fond, #fff)"/> <path d="M124,30 V44 M164,30 V44"/> <path d="M144,24 L174,28 V42" stroke-width="2.5"/><path d="M171,42 h6 l-1,8 h-4 Z" fill="currentColor" stroke-width="2"/></symbol>
+<symbol id="coq-noel" viewBox="0 4 214 166" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M8,160 L98,160 L98,138 C80,134 60,124 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 L122,44 C140,44 160,44 163,56 L178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C151,124 140,136 122,138 L122,160 L206,160"/> <path d="M164,37 C166,12 124,0 102,22 C108,22 114,27 118,37" /> <circle cx="99" cy="24" r="6.5" fill="currentColor"/> <path d="M116,46 c-6,0 -6,-10 0,-10 h48 c6,0 6,10 0,10 Z" fill="var(--fond, #fff)" stroke-width="4.5"/> <path d="M124,41 v.1 M134,41 v.1 M144,41 v.1 M154,41 v.1" stroke-width="3.5"/> <path d="M20,24 h8 M24,20 v8 M21.2,21.2 l5.6,5.6 M21.2,26.8 l5.6,-5.6 M202,44 h8 M206,40 v8 M203.2,41.2 l5.6,5.6 M203.2,46.8 l5.6,-5.6 M196,96 h8 M200,92 v8 M197.2,93.2 l5.6,5.6 M197.2,98.8 l5.6,-5.6 M10,118 h8 M14,114 v8 M11.2,115.2 l5.6,5.6 M11.2,120.8 l5.6,-5.6 M186,70 h8 M190,66 v8 M187.2,67.2 l5.6,5.6 M187.2,72.8 l5.6,-5.6" stroke-width="2.4"/></symbol>
+<symbol id="coq-ete" viewBox="0 4 214 166" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M8,160 Q15.5,156 23.0,160 Q30.5,164 38.0,160 Q45.5,156 53.0,160 Q60.5,164 68.0,160 Q75.5,156 83.0,160 Q90.5,164 98.0,160 L98,138 C80,134 60,124 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 C113,40 118,22 129,30 C126,13 142,14 145,31 C148,18 162,26 154,42 C159,43 163,48 163,56 L178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C151,124 140,136 122,138 L122,160 Q129.0,156 136.0,160 Q143.0,164 150.0,160 Q157.0,156 164.0,160 Q171.0,164 178.0,160 Q185.0,156 192.0,160 Q199.0,164 206.0,160"/> <circle cx="190" cy="26" r="8"/> <path d="M203.0,26.0 L209.0,26.0 M199.2,35.2 L203.4,39.4 M190.0,39.0 L190.0,45.0 M180.8,35.2 L176.6,39.4 M177.0,26.0 L171.0,26.0 M180.8,16.8 L176.6,12.6 M190.0,13.0 L190.0,7.0 M199.2,16.8 L203.4,12.6" stroke-width="3"/> <path d="M135,85 L123,69" stroke-width="2.2"/> <path d="M135,85 Q129,93 128,101 L142,101 Q141,93 135,85 Z M151,85 Q145,93 144,101 L158,101 Q157,93 151,85 Z" fill="currentColor" stroke-width="2.6"/> <path d="M128,100 Q90,99 46,99 M142,101 H144" stroke-width="2.4"/> <path d="M38,99 q-7,-7 -10,-1 q3,5 10,1 q-7,-2 -10,5 q5,2 10,-5 M38,99 l-4,9 M38,99 l-8,5 M38,99 H46" stroke-width="1.8"/> <circle cx="135" cy="93" r="1.5" fill="var(--fond, #fff)" stroke="none"/><circle cx="131.5" cy="98" r="1.5" fill="var(--fond, #fff)" stroke="none"/><circle cx="138.5" cy="98" r="1.5" fill="var(--fond, #fff)" stroke="none"/><circle cx="151" cy="93" r="1.5" fill="var(--fond, #fff)" stroke="none"/><circle cx="147.5" cy="98" r="1.5" fill="var(--fond, #fff)" stroke="none"/><circle cx="154.5" cy="98" r="1.5" fill="var(--fond, #fff)" stroke="none"/></symbol>
+<symbol id="coq-fete" viewBox="0 4 214 166" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M8,160 L98,160 L98,138 C80,134 60,124 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 C113,40 118,22 129,30 C126,13 142,14 145,31 C148,18 162,26 154,42 C159,43 163,48 163,56 L178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C151,124 140,136 122,138 L122,160 L206,160"/> <path d="M35.0,32.0 L54.0,32.0 M34.3,35.0 L51.4,43.3 M32.4,37.5 L44.2,52.3 M29.6,38.8 L33.8,57.3 M26.4,38.8 L22.2,57.3 M23.6,37.5 L11.8,52.3 M21.7,35.0 L4.6,43.3 M21.0,32.0 L2.0,32.0 M21.7,29.0 L4.6,20.7 M23.6,26.5 L11.8,11.7 M26.4,25.2 L22.2,6.7 M29.6,25.2 L33.8,6.7 M32.4,26.5 L44.2,11.7 M34.3,29.0 L51.4,20.7" stroke-width="3"/> <path d="M192.0,28.0 L208.0,28.0 M191.2,31.0 L205.1,39.0 M189.0,33.2 L197.0,47.1 M186.0,34.0 L186.0,50.0 M183.0,33.2 L175.0,47.1 M180.8,31.0 L166.9,39.0 M180.0,28.0 L164.0,28.0 M180.8,25.0 L166.9,17.0 M183.0,22.8 L175.0,8.9 M186.0,22.0 L186.0,6.0 M189.0,22.8 L197.0,8.9 M191.2,25.0 L205.1,17.0" stroke-width="3"/> <path d="M200.0,104.0 L207.0,104.0 M198.8,106.8 L203.8,111.8 M196.0,108.0 L196.0,115.0 M193.2,106.8 L188.2,111.8 M192.0,104.0 L185.0,104.0 M193.2,101.2 L188.2,96.2 M196.0,100.0 L196.0,93.0 M198.8,101.2 L203.8,96.2" stroke-width="2.5"/> <path d="M84,5 Q84,12 91,12 Q84,12 84,19 Q84,12 77,12 Q84,12 84,5 Z M16,94 Q16,100 22,100 Q16,100 16,106 Q16,100 10,100 Q16,100 16,94 Z M170,65 Q170,70 175,70 Q170,70 170,75 Q170,70 165,70 Q170,70 170,65 Z" fill="currentColor" stroke-width="1.5"/> <path d="M60,20 l6,3 M206,62 l-5,4 M30,126 l6,3 M180,128 l6,-2" stroke-width="3.5"/></symbol>
+<symbol id="coq-midsommar" viewBox="0 4 214 166" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M8,160 L98,160 L98,138 C80,134 60,124 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 C113,40 118,22 129,30 C126,13 142,14 145,31 C148,18 162,26 154,42 C159,43 163,48 163,56 L178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C151,124 140,136 122,138 L122,160 L206,160"/> <path d="M110,30 Q122,18 135,13 Q148,10 160,20" stroke-width="2.2"/> <path d="M127,19 l-5,-6 M150,11 l4,-6 M112,27 l-6,-1" stroke-width="2.2"/> <circle cx="115.0" cy="21.4" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="119.4" cy="24.6" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="117.7" cy="29.7" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="112.3" cy="29.7" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="110.6" cy="24.6" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="115" cy="26" r="2.4" fill="currentColor" stroke="none"/><circle cx="135.0" cy="9.4" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="139.4" cy="12.6" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="137.7" cy="17.7" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="132.3" cy="17.7" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="130.6" cy="12.6" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="135" cy="14" r="2.4" fill="currentColor" stroke="none"/><circle cx="156.0" cy="13.4" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="160.4" cy="16.6" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="158.7" cy="21.7" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="153.3" cy="21.7" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="151.6" cy="16.6" r="3.2" fill="var(--fond, #fff)" stroke-width="2"/><circle cx="156" cy="18" r="2.4" fill="currentColor" stroke="none"/></symbol>
+</svg>
+
+<!-- ======================= BARRE ======================= -->
+<header class="barre" id="barre">
+  <a class="logo" href="#top" aria-label="French Poulet Club, back to top"><svg viewBox="0 0 176 176" aria-hidden="true"><use href="#coq"/></svg><span>French Poulet Club</span></a>
+  <nav class="liens" aria-label="Main">
+    <a href="#menu">Menu</a>
+    <a href="#find-us">Find us</a>
+    <a class="btn" href="#follow">Follow us</a>
+  </nav>
+  <button class="burger" type="button" aria-expanded="false" aria-controls="panneau" aria-label="Open menu"><span></span><span></span><span></span></button>
+</header>
+
+<nav class="panneau" id="panneau" aria-label="Main">
+  <ul>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#card">Club card</a></li>
+    <li><a href="#follow">Follow us</a></li>
+    <li><a href="#find-us">Find us</a></li>
+  </ul>
+  <a class="btn" href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener">Instagram</a>
+  <div class="sol" aria-hidden="true"><i></i><svg viewBox="0 0 214 166"><use href="#coq-sol"/></svg><i></i></div>
+</nav>
+
+<main id="top">
+<!-- ======================= HERO ======================= -->
+<section class="hero">
+  <div class="hero-main">
+    <span class="badge"><b></b>Stockholm · Spring 2028</span>
+    <h1 class="t"><span>French</span><span>Poulet</span><span>Club.</span></h1>
+    <div class="ctas">
+      <a class="btn" href="#menu">See the menu</a>
+      <a class="btn creux" href="#follow">Follow us</a>
+    </div>
+  </div>
+  <div class="sol"><i></i><button class="coq-btn" type="button" id="coq-hero" aria-label="Make the rooster run"><svg viewBox="0 0 214 166" aria-hidden="true"><use href="#coq-sol"/></svg><span class="eclats" aria-hidden="true"><i style="--k:-2"></i><i style="--k:-1"></i><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i></span></button><i></i></div>
+</section>
+
+<!-- ======================= RUBAN ======================= -->
+<div class="ruban" aria-hidden="true"><div>
+  <span>Bon appétit <svg viewBox="0 0 214 166"><use href="#coq-sol"/></svg> Merci <svg viewBox="0 0 214 166"><use href="#coq-sol"/></svg> Voilà <svg viewBox="0 0 214 166"><use href="#coq-sol"/></svg> Oui chef <svg viewBox="0 0 214 166"><use href="#coq-sol"/></svg> Poulet <svg viewBox="0 0 214 166"><use href="#coq-sol"/></svg></span>
+  <span>Bon appétit <svg viewBox="0 0 214 166"><use href="#coq-sol"/></svg> Merci <svg viewBox="0 0 214 166"><use href="#coq-sol"/></svg> Voilà <svg viewBox="0 0 214 166"><use href="#coq-sol"/></svg> Oui chef <svg viewBox="0 0 214 166"><use href="#coq-sol"/></svg> Poulet <svg viewBox="0 0 214 166"><use href="#coq-sol"/></svg></span>
+</div></div>
+
+<!-- ======================= BANDE DE PHOTOS ======================= -->
+<div class="photos" aria-hidden="true"><div><img src="img/photo-cuisse.jpg" alt="" width="900" height="900"><img src="img/photo-pilons.jpg" alt="" width="900" height="900"><img src="img/photo-croque.jpg" alt="" width="900" height="900"><img src="img/photo-menu.jpg" alt="" width="900" height="900"><img src="img/photo-cuisse.jpg" alt="" width="900" height="900"><img src="img/photo-pilons.jpg" alt="" width="900" height="900"><img src="img/photo-croque.jpg" alt="" width="900" height="900"><img src="img/photo-menu.jpg" alt="" width="900" height="900"></div></div>
+
+<!-- ======================= MENU ======================= -->
+<section class="menu" id="menu" aria-labelledby="t-menu">
+  <div class="wrap">
+    <div class="tete rev">
+      <h2 class="t" id="t-menu">The menu.</h2>
+      <p class="kicker">Prices in kr · VAT included</p>
+    </div>
+    <div class="affiche">
+      <div class="cat rev">
+        <h3><span>Chicken</span><span>Oven roasted · No pork</span></h3>
+        <div class="ligne"><span class="nm">3 Drumsticks</span><span class="pts"></span><span class="pr">49</span></div>
+        <div class="ligne"><span class="nm">Whole leg<span class="ds">Thigh &amp; drumstick</span></span><span class="pts"></span><span class="pr">55</span></div>
+        <div class="ligne"><span class="nm">Breast<span class="ds">Skin on</span></span><span class="pts"></span><span class="pr">59</span></div>
+        <div class="ligne"><span class="nm">Half chicken</span><span class="pts"></span><span class="pr">99</span></div>
+        <div class="ligne"><span class="nm">Whole chicken<span class="ds">To share (or not)</span></span><span class="pts"></span><span class="pr">179</span></div>
+      </div>
+      <div class="cat rev">
+        <h3><span>Meals</span><span>Chicken + side + sauce</span></h3>
+        <div class="ligne"><span class="nm">Classic<span class="ds">Any chicken, 1 side, 1 sauce</span></span><span class="pts"></span><span class="pr">125</span></div>
+        <div class="ligne"><span class="nm">+ Drink</span><span class="pts"></span><span class="pr">149</span></div>
+        <div class="ligne"><span class="nm">+ Drink + dessert</span><span class="pts"></span><span class="pr">175</span></div>
+        <div class="ligne"><span class="nm">Student<span class="ds">With student card</span></span><span class="pts"></span><span class="pr">110</span></div>
+        <div class="ligne"><span class="nm">Family<span class="pastille">DEAL</span><span class="ds">Whole chicken, 3 sides, 2 sauces</span></span><span class="pts"></span><span class="pr">239</span></div>
+      </div>
+      <div class="cat rev">
+        <h3><span>Sides</span><span>39 kr each</span></h3>
+        <div class="liste">Pan-fried potatoes <span>/</span> Creamy pasta <span>/</span> Green beans</div>
+        <h3 style="margin-top:32px"><span>Sauces</span><span>12 kr each</span></h3>
+        <div class="liste">Green <span>/</span> Onion <span>/</span> Mayo</div>
+      </div>
+      <div class="cat rev">
+        <h3><span>More</span></h3>
+        <div class="ligne"><span class="nm">Gratin dauphinois</span><span class="pts"></span><span class="pr">49</span></div>
+        <div class="ligne"><span class="nm">Croque-monsieur</span><span class="pts"></span><span class="pr soon">Soon</span></div>
+        <div class="ligne"><span class="nm">Cordon bleu</span><span class="pts"></span><span class="pr soon">Soon</span></div>
+        <div class="ligne"><span class="nm">Tiramisu</span><span class="pts"></span><span class="pr">49</span></div>
+        <div class="ligne"><span class="nm">Soft drink</span><span class="pts"></span><span class="pr">20</span></div>
+      </div>
+    </div>
+    <div class="pied"><span>Menu and prices may change before opening.</span><b>Bon appétit !</b></div>
+  </div>
+</section>
+
+<!-- ======================= CARTE DU CLUB ======================= -->
+<section class="fid" id="card" aria-labelledby="t-fid">
+  <div class="wrap">
+    <div class="rev">
+      <p class="kicker" style="color:var(--bleu)">Club card</p>
+      <h2 class="t" id="t-fid" style="margin-top:14px">Get<br>stamped.</h2>
+      <p class="txt">A club card in your phone wallet, scanned at the counter. What it gets you? We'll tell you at the opening.</p>
+    </div>
+    <div class="rev">
+      <div class="cb-zone">
+        <div class="cb" id="carte">
+          <div class="face recto">
+            <svg class="sg" viewBox="0 0 214 166" aria-hidden="true"><use href="#coq-sol"/></svg>
+            <div class="haut"><span>French Poulet Club</span><span>FPC</span></div>
+            <div class="tampons" role="group" aria-label="Stamps, tap to fill the card">
+              <button type="button" aria-label="Stamp 1" aria-pressed="false"><svg viewBox="0 0 176 176" aria-hidden="true"><use href="#coq"/></svg></button>
+              <button type="button" aria-label="Stamp 2" aria-pressed="false"><svg viewBox="0 0 176 176" aria-hidden="true"><use href="#coq"/></svg></button>
+              <button type="button" aria-label="Stamp 3" aria-pressed="false"><svg viewBox="0 0 176 176" aria-hidden="true"><use href="#coq"/></svg></button>
+              <button type="button" aria-label="Stamp 4" aria-pressed="false"><svg viewBox="0 0 176 176" aria-hidden="true"><use href="#coq"/></svg></button>
+              <button type="button" aria-label="Stamp 5" aria-pressed="false"><svg viewBox="0 0 176 176" aria-hidden="true"><use href="#coq"/></svg></button>
+              <button type="button" aria-label="Stamp 6" aria-pressed="false"><svg viewBox="0 0 176 176" aria-hidden="true"><use href="#coq"/></svg></button>
+            </div>
+            <div class="bas"><span>Member card</span><b id="compte">0 / 6</b></div>
+          </div>
+          <div class="face verso" aria-hidden="true">
+            <svg class="sg" viewBox="0 0 214 166" aria-hidden="true"><use href="#coq-sol"/></svg>
+            <strong>Voilà !</strong>
+            <span>Card full. See you at the opening.</span>
+            <button type="button" id="encore" tabindex="-1">Again</button>
+          </div>
+        </div>
+      </div>
+      <p class="aide" aria-live="polite" id="aide">Go on, tap the 6 stamps.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= SUIVRE L'OUVERTURE ======================= -->
+<section class="suivre" id="follow" aria-labelledby="t-suivre">
+  <svg class="supergraphie" viewBox="0 0 214 166" aria-hidden="true"><use href="#coq-sol"/></svg>
+  <div class="wrap">
+    <p class="kicker rev">#FPC</p>
+    <h2 class="t rev" id="t-suivre">Be there<br>first.</h2>
+    <p class="rev">The oven is not on yet. Follow us for the address, the opening day and the first tastings.</p>
+    <a class="btn rev" href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener">Follow @frenchpouletclub</a>
+  </div>
+</section>
+</main>
+
+<!-- ======================= PIED ======================= -->
+<footer id="find-us">
+  <div class="wrap">
+    <h2 class="t rev">Bon appétit,<br>Stockholm.</h2>
+    <div class="infos">
+      <div><p class="kicker">Where</p><p>Stockholm.<br>Exact address soon.</p></div>
+      <div><p class="kicker">When</p><p>Opening spring 2028.</p></div>
+      <div><p class="kicker">Say hej</p><p><a href="mailto:hello@frenchpouletclub.com">hello@frenchpouletclub.com</a><br><a href="https://www.instagram.com/frenchpouletclub" target="_blank" rel="noopener">Instagram</a></p></div>
+    </div>
+  </div>
+  <div class="sol"><i></i><button class="coq-btn" type="button" aria-label="Make the rooster run"><svg viewBox="0 0 214 166" aria-hidden="true"><use href="#coq-sol"/></svg><span class="eclats" aria-hidden="true"><i style="--k:-2"></i><i style="--k:-1"></i><i style="--k:0"></i><i style="--k:1"></i><i style="--k:2"></i></span></button><i></i></div>
+  <div class="mentions"><span>© 2026 French Poulet Club</span><span>Stockholm · 2028</span></div>
+</footer>
+
+<script>
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const rejouer = (el, cls) => { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); };
+
+  // Apparition des blocs au scroll
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vu'); io.unobserve(e.target); } }), { threshold: .12 });
+  $$('.rev').forEach((el, i) => { el.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(el); });
+
+  // Ombre de la barre dès qu'on défile
+  const barre = $('#barre');
+  addEventListener('scroll', () => barre.classList.toggle('ombre', scrollY > 8), { passive: true });
+
+  // Panneau plein écran (mobile)
+  const burger = $('.burger'), panneau = $('#panneau');
+  const basculer = ouvrir => {
+    burger.setAttribute('aria-expanded', ouvrir);
+    burger.setAttribute('aria-label', ouvrir ? 'Close menu' : 'Open menu');
+    panneau.classList.toggle('ouvert', ouvrir);
+    document.body.classList.toggle('bloque', ouvrir);
+    if (ouvrir) $('a', panneau).focus();
+  };
+  burger.addEventListener('click', () => basculer(burger.getAttribute('aria-expanded') !== 'true'));
+  $$('a', panneau).forEach(a => a.addEventListener('click', () => basculer(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && panneau.classList.contains('ouvert')) { basculer(false); burger.focus(); } });
+  matchMedia('(min-width:960px)').addEventListener('change', e => e.matches && basculer(false));
+
+  // Coqs cliquables : élan, course vers la droite sur la ligne, retour par la gauche, rebond
+  const calme = matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const ressort = 'cubic-bezier(.3,1.4,.5,1)';
+  const boing = svg => svg.animate([
+    { transform: 'none' }, { transform: 'scale(1.12,.82)', offset: .14 }, { transform: 'scale(.9,1.22) rotate(-4deg)', offset: .38 },
+    { transform: 'scale(1.05,.94) rotate(3deg)', offset: .58 }, { transform: 'scale(.98,1.04) rotate(-1deg)', offset: .76 }, { transform: 'none' }
+  ], { duration: 750, easing: ressort });
+  const poussiere = (sol, b) => {
+    const rs = sol.getBoundingClientRect(), rb = b.getBoundingClientRect(), w = rb.width;
+    const p = document.createElement('span'); p.className = 'poussiere';
+    p.style.left = (rb.left - rs.left + w * (.38 + Math.random() * .1)) + 'px';
+    p.style.bottom = `calc(var(--pb) + ${w * 9 / 214}px)`;
+    sol.appendChild(p);
+    p.animate([{ transform: 'scale(.4)', opacity: .6 }, { transform: `translate(${-w * .25}px,${-w * (.08 + Math.random() * .1)}px) scale(1.3)`, opacity: 0 }], { duration: 520, easing: 'ease-out' }).finished.then(() => p.remove());
+  };
+  const courir = async b => {
+    if (b.dataset.court) return;
+    b.dataset.court = '1';
+    const svg = $('svg', b), use = $('use', svg), sol = b.parentElement;
+    svg.style.strokeDasharray = 'none';           // fin du tracé du hero, sinon les autres coqs sortent en pointillés
+    b.classList.remove('coucou', 'saute');
+    if (calme) { rejouer(b, 'saute'); delete b.dataset.court; return; }
+    const r = b.getBoundingClientRect(), vw = document.documentElement.clientWidth;
+    use.setAttribute('href', '#coq-sol-nu');
+    sol.classList.add('court');
+    const elan = svg.animate([{ transform: 'none' }, { transform: 'scale(1.14,.82) rotate(6deg)' }], { duration: 170, easing: 'ease-out', fill: 'forwards' });
+    await elan.finished;
+    elan.cancel();
+    use.setAttribute('href', '#coq-run-nu');
+    const trot = svg.animate([{ transform: 'translateY(0) rotate(0)' }, { transform: 'translateY(-8%) rotate(-6deg)' }], { duration: 105, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+    const nuage = setInterval(() => poussiere(sol, b), 70);
+    navigator.vibrate?.(10);
+    await b.animate([{ transform: 'translateX(0)' }, { transform: `translateX(${vw - r.left + 20}px)` }], { duration: 620, easing: 'cubic-bezier(.55,0,.9,.55)' }).finished;
+    await b.animate([{ transform: `translateX(${-(r.right + 20)}px)` }, { transform: 'translateX(0)' }], { duration: 900, easing: 'cubic-bezier(.15,.6,.3,1)' }).finished;
+    clearInterval(nuage);
+    trot.cancel();
+    use.setAttribute('href', '#coq-sol-nu');
+    rejouer(b, 'saute');
+    navigator.vibrate?.([15, 40, 15]);
+    await boing(svg).finished;
+    use.setAttribute('href', '#coq-sol');
+    sol.classList.remove('court');
+    delete b.dataset.court;
+  };
+  $$('.coq-btn').forEach(b => b.addEventListener('click', () => courir(b)));
+  // Le coq du hero fait coucou une fois dessiné, pour inviter au clic
+  const coqHero = $('#coq-hero');
+  $('svg', coqHero).addEventListener('animationend', e => { if (e.animationName === 'draw') e.target.style.strokeDasharray = 'none'; });
+  setTimeout(() => { if (!coqHero.dataset.court && !coqHero.classList.contains('saute')) rejouer(coqHero, 'coucou'); }, 3600);
+
+  // Carte du club : 6 tampons = la carte se retourne et ça part en confettis
+  const tampons = $$('.tampons button'), compte = $('#compte'), carte = $('#carte'), aide = $('#aide'), verso = $('.verso'), encore = $('#encore');
+  tampons.forEach(b => b.addEventListener('click', () => {
+    b.classList.toggle('on');
+    b.setAttribute('aria-pressed', b.classList.contains('on'));
+    const n = tampons.filter(t => t.classList.contains('on')).length;
+    compte.textContent = n + ' / 6';
+    navigator.vibrate?.(10);
+    if (n === 6) setTimeout(remplie, 250);
+  }));
+  function remplie() {
+    carte.classList.add('retournee');
+    verso.removeAttribute('aria-hidden'); encore.tabIndex = 0;
+    tampons.forEach(t => t.tabIndex = -1);
+    aide.textContent = 'Voilà ! Card full.';
+    navigator.vibrate?.([30, 40, 60]);
+    if (!calme) confettis(carte.getBoundingClientRect());
+  }
+  encore.addEventListener('click', () => {
+    carte.classList.remove('retournee');
+    verso.setAttribute('aria-hidden', 'true'); encore.tabIndex = -1;
+    tampons.forEach(t => { t.classList.remove('on'); t.setAttribute('aria-pressed', 'false'); t.tabIndex = 0; });
+    compte.textContent = '0 / 6'; aide.textContent = 'Go on, tap the 6 stamps.';
+    tampons[0].focus();
+  });
+  function confettis(r) {
+    const zone = document.createElement('div'); zone.className = 'confettis'; document.body.appendChild(zone);
+    const couleurs = ['#0055A4', '#0055A4', '#3D7CC6', '#002654', '#EF4135'];
+    const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    for (let k = 0; k < 70; k++) {
+      const coq = k % 10 === 0;
+      const el = coq ? document.createElementNS('http://www.w3.org/2000/svg', 'svg') : document.createElement('i');
+      if (coq) { el.setAttribute('viewBox', '0 0 214 166'); el.innerHTML = '<use href="#coq-sol"/>'; }
+      else { const w = 6 + Math.random() * 8; el.style.width = w + 'px'; el.style.height = w * (Math.random() < .5 ? .45 : 1) + 'px'; el.style.background = couleurs[k % couleurs.length]; if (k % 3 === 0) el.style.borderRadius = '50%'; }
+      zone.appendChild(el);
+      const a = Math.random() * Math.PI * 2, v = 160 + Math.random() * 320;
+      const dx = Math.cos(a) * v, dy = Math.sin(a) * v - 260, tourne = (Math.random() - .5) * 900;
+      el.animate([
+        { transform: `translate(${cx}px,${cy}px) rotate(0) scale(.4)`, opacity: 1 },
+        { transform: `translate(${cx + dx * .7}px,${cy + dy * .7}px) rotate(${tourne * .6}deg) scale(1)`, opacity: 1, offset: .45 },
+        { transform: `translate(${cx + dx}px,${cy + dy + 520}px) rotate(${tourne}deg) scale(.9)`, opacity: 0 }
+      ], { duration: 1600 + Math.random() * 900, easing: 'cubic-bezier(.2,.6,.4,1)', fill: 'forwards' });
+    }
+    setTimeout(() => zone.remove(), 2700);
+  }
+</script>
+</body>
+</html>
