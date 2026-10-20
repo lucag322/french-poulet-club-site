@@ -20,7 +20,9 @@ jobs:
       - name: Build
         run: |
           mkdir dist
-          cp -R index.html favicon.svg fonts img dist/
+          cp -R index.html llms.txt favicon.svg fonts img dist/
+          SITE="https://${{ vars.STAGE_DOMAIN || 'lucag322.github.io/french-poulet-club-stage' }}"
+          sed -i "s|__SITE__|$SITE|g" dist/index.html dist/llms.txt
           sed -i 's|<meta charset="utf-8">|<meta charset="utf-8">\n<meta name="robots" content="noindex, nofollow">|' dist/index.html
           printf 'User-agent: *\nDisallow: /\n' > dist/robots.txt
           # Sous-domaine branché seulement quand le DNS est prêt (variable de dépôt STAGE_DOMAIN)

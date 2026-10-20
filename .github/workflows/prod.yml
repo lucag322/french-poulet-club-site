@@ -29,8 +29,29 @@ jobs:
       - name: Build
         run: |
           mkdir dist
-          cp -R index.html favicon.svg fonts img dist/
+          cp -R index.html llms.txt favicon.svg fonts img dist/
+          SITE="https://${{ vars.PROD_DOMAIN }}"
+          sed -i "s|__SITE__|$SITE|g" dist/index.html dist/llms.txt
           echo "${{ vars.PROD_DOMAIN }}" > dist/CNAME
+          # Moteurs de recherche et robots des IA autorisés
+          cat > dist/robots.txt <<EOF
+          User-agent: *
+          Allow: /
+
+          User-agent: GPTBot
+          User-agent: OAI-SearchBot
+          User-agent: ChatGPT-User
+          User-agent: ClaudeBot
+          User-agent: Claude-SearchBot
+          User-agent: Claude-User
+          User-agent: PerplexityBot
+          User-agent: Google-Extended
+          User-agent: Applebot-Extended
+          Allow: /
+
+          Sitemap: $SITE/sitemap.xml
+          EOF
+          printf '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>%s/</loc><lastmod>%s</lastmod></url>\n</urlset>\n' "$SITE" "$(date -u +%F)" > dist/sitemap.xml
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

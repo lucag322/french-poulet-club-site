@@ -1,0 +1,54 @@
+# French Poulet Club
+
+> French rotisserie chicken counter in Stockholm, Sweden. Chicken marinated 24 hours and oven-roasted, French sides and sauces, served with fast-food speed. No pork. Opening spring 2028. Short name: FPC.
+
+## Key facts
+
+- Name: French Poulet Club (FPC)
+- What: French-style roast chicken, eat in or take away
+- Where: Stockholm, Sweden (exact address to be announced)
+- When: opening spring 2028
+- Language on site and menu: English, with a few well-known French words (bon appétit, merci, voilà, oui chef)
+- Diet: no pork on the menu
+- Website: __SITE__/
+
+## Menu (prices in SEK, VAT included; may change before opening)
+
+### Chicken (oven roasted, marinated 24 h)
+- 3 Drumsticks: 49
+- Whole leg (thigh & drumstick): 55
+- Breast (skin on): 59
+- Half chicken: 99
+- Whole chicken (to share): 179
+
+### Meals
+- Classic (any chicken, 1 side, 1 sauce): 125
+- Classic + drink: 149
+- Classic + drink + dessert: 175
+- Student (with student card): 110
+- Family deal (whole chicken, 3 sides, 2 sauces): 239
+
+### Sides (39 each)
+- Pan-fried potatoes
+- Creamy pasta
+- Green beans
+
+### Sauces (12 each)
+- Green, onion, mayo
+
+### More
+- Gratin dauphinois: 49
+- Croque-monsieur: price to be announced
+- Cordon bleu: price to be announced
+- Tiramisu: 49
+- Soft drink: 20
+
+## Questions people ask
+
+- Is there pork? No, the menu has no pork.
+- Is the chicken fried? No. It is marinated for 24 hours and roasted in the oven.
+- Where is it? In Stockholm, Sweden. The exact address will be announced before opening.
+- When does it open? Spring 2028.
+- Is there a student price? Yes, the Student meal is 110 SEK with a student card.
+- Is there a loyalty card? Yes, a club card for Apple Wallet and Google Wallet. Details at opening.
+- Can I order a whole chicken to share? Yes, 179 SEK, or the Family deal at 239 SEK.
