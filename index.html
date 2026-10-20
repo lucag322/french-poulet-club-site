@@ -6,6 +6,9 @@
 <title>French Poulet Club · French roast chicken in Stockholm</title>
 <meta name="description" content="French rotisserie chicken in Stockholm: marinated 24 hours, oven-roasted, served fast. French sides and sauces, no pork. Opening spring 2028.">
 <link rel="canonical" href="__SITE__/">
+<link rel="alternate" hreflang="en" href="__SITE__/">
+<link rel="alternate" hreflang="sv" href="__SITE__/sv/">
+<link rel="alternate" hreflang="x-default" href="__SITE__/">
 <meta property="og:type" content="restaurant">
 <meta property="og:site_name" content="French Poulet Club">
 <meta property="og:title" content="French Poulet Club · Stockholm">
@@ -317,6 +320,7 @@
   .logo{display:flex;align-items:center;gap:10px;min-height:44px;text-decoration:none;font:800 13px/1 var(--titre);text-transform:uppercase}
   .logo svg{width:32px;height:32px}
   .liens{display:none}
+  .langue{margin-left:auto;display:grid;place-items:center;min-width:44px;height:36px;padding:0 10px;border:2px solid currentColor;border-radius:99px;font:800 11px/1 var(--titre);text-decoration:none;position:relative;z-index:61}
   .burger{position:relative;z-index:61;width:48px;height:48px;margin-right:-8px;border:0;background:none;cursor:pointer;display:grid;place-items:center}
   .burger span{position:absolute;width:24px;height:3px;border-radius:3px;background:currentColor;transition:transform .3s var(--ressort),opacity .2s}
   .burger span:nth-child(1){transform:translateY(-7px)}
@@ -459,7 +463,8 @@
     body{font-size:17px}
     .logo{font-size:15px}.logo svg{width:36px;height:36px}
     .burger,.panneau{display:none}
-    .liens{display:flex;align-items:center;gap:28px;font-weight:500}
+    .liens{display:flex;align-items:center;gap:28px;font-weight:500;margin-left:auto}
+    .langue{margin-left:20px}
     .liens a{text-decoration:none}
     .liens .btn{min-height:44px}
     .hero h1{font-size:clamp(48px,min(12vw,16svh),200px)}
@@ -527,7 +532,8 @@
     <a href="#find-us">Find us</a>
     <a class="btn" href="#follow">Follow us</a>
   </nav>
-  <button class="burger" type="button" aria-expanded="false" aria-controls="panneau" aria-label="Open menu"><span></span><span></span><span></span></button>
+  <a class="langue" href="sv/" hreflang="sv" lang="sv" aria-label="På svenska">SV</a>
+  <button class="burger" type="button" aria-expanded="false" aria-controls="panneau" aria-label="Open menu" data-ouvrir="Open menu" data-fermer="Close menu"><span></span><span></span><span></span></button>
 </header>
 
 <nav class="panneau" id="panneau" aria-label="Main">
@@ -639,7 +645,7 @@
           </div>
         </div>
       </div>
-      <p class="aide" aria-live="polite" id="aide">Go on, tap the 6 stamps.</p>
+      <p class="aide" aria-live="polite" id="aide" data-fin="Voilà ! Card full.">Go on, tap the 6 stamps.</p>
     </div>
   </div>
 </section>
@@ -699,7 +705,7 @@
   const burger = $('.burger'), panneau = $('#panneau');
   const basculer = ouvrir => {
     burger.setAttribute('aria-expanded', ouvrir);
-    burger.setAttribute('aria-label', ouvrir ? 'Close menu' : 'Open menu');
+    burger.setAttribute('aria-label', ouvrir ? burger.dataset.fermer : burger.dataset.ouvrir);
     panneau.classList.toggle('ouvert', ouvrir);
     document.body.classList.toggle('bloque', ouvrir);
     if (ouvrir) $('a', panneau).focus();
@@ -760,7 +766,7 @@
   setTimeout(() => { if (!coqHero.dataset.court && !coqHero.classList.contains('saute')) rejouer(coqHero, 'coucou'); }, 3600);
 
   // Carte du club : 6 tampons = la carte se retourne et ça part en confettis
-  const tampons = $$('.tampons button'), compte = $('#compte'), carte = $('#carte'), aide = $('#aide'), verso = $('.verso'), encore = $('#encore');
+  const tampons = $$('.tampons button'), compte = $('#compte'), carte = $('#carte'), aide = $('#aide'), verso = $('.verso'), encore = $('#encore'), aideDepart = aide.textContent;
   tampons.forEach(b => b.addEventListener('click', () => {
     b.classList.toggle('on');
     b.setAttribute('aria-pressed', b.classList.contains('on'));
@@ -773,7 +779,7 @@
     carte.classList.add('retournee');
     verso.removeAttribute('aria-hidden'); encore.tabIndex = 0;
     tampons.forEach(t => t.tabIndex = -1);
-    aide.textContent = 'Voilà ! Card full.';
+    aide.textContent = aide.dataset.fin;
     navigator.vibrate?.([30, 40, 60]);
     if (!calme) confettis(carte.getBoundingClientRect());
   }
@@ -781,7 +787,7 @@
     carte.classList.remove('retournee');
     verso.setAttribute('aria-hidden', 'true'); encore.tabIndex = -1;
     tampons.forEach(t => { t.classList.remove('on'); t.setAttribute('aria-pressed', 'false'); t.tabIndex = 0; });
-    compte.textContent = '0 / 6'; aide.textContent = 'Go on, tap the 6 stamps.';
+    compte.textContent = '0 / 6'; aide.textContent = aideDepart;
     tampons[0].focus();
   });
   function confettis(r) {

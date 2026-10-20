@@ -8,6 +8,20 @@ Site vitrine du French Poulet Club (Stockholm, ouverture printemps 2028). Une se
 python3 -m http.server 8766
 ```
 
+Version suédoise, 404, robots et sitemap ne sont générés qu'à la construction :
+
+```bash
+python3 build.py --out _site --site http://localhost:8767 && python3 -m http.server 8767 -d _site
+```
+
+## Version suédoise
+
+`sv/index.html` est produit par `build.py` à partir de `index.html` et de la liste `SV` (texte anglais → texte suédois). Un texte anglais modifié dans `index.html` doit l'être aussi dans `SV`, sinon la construction s'arrête en indiquant lequel.
+
+## Mesure d'audience
+
+Cloudflare Web Analytics (gratuit, sans cookie, donc sans bannière). Ajoutée en prod seulement quand la variable de dépôt `ANALYTICS_TOKEN` est définie.
+
 ## Mise en ligne
 
 | Branche | Adresse | Workflow |

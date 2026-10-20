@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Page not found · French Poulet Club</title>
+<meta name="theme-color" content="#0055A4">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/unbounded-800.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  /* Page 404 : le coq court sur sa ligne, d'un bord à l'autre, en boucle */
+  @font-face{font-family:"Unbounded";font-weight:800;font-display:swap;src:url(/fonts/unbounded-800.woff2) format("woff2")}
+  @font-face{font-family:"DM Sans";font-weight:100 1000;font-display:swap;src:url(/fonts/dm-sans.woff2) format("woff2")}
+  :root{--bleu:#0055A4;--nuit:#002654;--rouge:#EF4135}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overscroll-behavior:none}
+  body{background:var(--bleu);color:#fff;font:400 17px/1.5 "DM Sans",system-ui,sans-serif;display:flex;flex-direction:column;overflow:hidden;-webkit-font-smoothing:antialiased}
+  main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:32px 20px}
+  .n{font:800 13px/1 "Unbounded",sans-serif;letter-spacing:.14em;opacity:.7}
+  h1{margin-top:14px;font:800 clamp(56px,16vw,200px)/.95 "Unbounded",sans-serif;text-transform:uppercase;letter-spacing:-.02em}
+  p{margin-top:18px;font-size:clamp(17px,2vw,22px);max-width:30ch}
+  p[lang="sv"]{margin-top:6px;opacity:.7;font-size:16px}
+  a{display:inline-flex;align-items:center;justify-content:center;align-self:flex-start;min-height:52px;margin-top:32px;padding:0 26px;border-radius:99px;background:#fff;color:var(--bleu);font:800 13px/1 "Unbounded",sans-serif;text-transform:uppercase;text-decoration:none;transition:transform .2s,box-shadow .2s}
+  a:hover{transform:translateY(-2px) rotate(-2deg);box-shadow:0 6px 0 var(--nuit)}
+  a:focus-visible{outline:3px solid var(--rouge);outline-offset:3px}
+  .piste{position:relative;height:150px;margin-bottom:max(28px,env(safe-area-inset-bottom))}
+  .piste::before{content:"";position:absolute;left:0;right:0;bottom:5px;height:4px;border-radius:9px;background:#fff}
+  .coureur{position:absolute;left:0;bottom:0;width:120px;animation:course 3.2s linear infinite}
+  .coureur svg{display:block;width:120px;height:auto;overflow:visible;animation:trot .21s ease-in-out infinite alternate;transform-origin:50% 94%}
+  @keyframes course{from{transform:translateX(-140px)}to{transform:translateX(100vw)}}
+  @keyframes trot{to{transform:translateY(-8%) rotate(-6deg)}}
+  @media (min-width:960px){main{padding:56px}.piste{height:190px}.coureur,.coureur svg{width:160px}@keyframes course{from{transform:translateX(-180px)}to{transform:translateX(100vw)}}}
+  @media (prefers-reduced-motion:reduce){.coureur{animation:none;left:50%;transform:translateX(-50%)}.coureur svg{animation:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="coq-run-nu" viewBox="0 4 214 166" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M84,160 L100,138 C80,134 60,124 55,102 C36,100 36,66 55,62 C35,46 54,16 69,42 C69,8 94,28 92,84 C104,86 115,80 122,66 C119,58 119,47 122,43 C113,40 118,22 129,30 C126,13 142,14 145,31 C148,18 162,26 154,42 C159,43 163,48 163,56 L178,62 L164,69 Q163,84 154,81 Q150,77 151,73 C151,81 156,90 154,104 C151,124 140,136 122,138 L140,160"/> <path d="M121,51 L162,49 M121,51 L106,44 M121,51 L104,56"/> <path d="M14,92 L30,92 M8,110 L32,110 M18,128 L36,128"/></symbol>
+</svg>
+<main>
+  <p class="n">404</p>
+  <h1>Oups.</h1>
+  <p>This chicken ran away. The page you are looking for does not exist.</p>
+  <p lang="sv">Hoppsan, den här kycklingen sprang iväg.</p>
+  <a href="/">Back home</a>
+</main>
+<div class="piste" aria-hidden="true"><div class="coureur"><svg viewBox="0 0 214 166"><use href="#coq-run-nu"/></svg></div></div>
+</body>
+</html>

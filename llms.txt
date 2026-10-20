@@ -10,7 +10,7 @@
 - When: opening spring 2028
 - Language on site and menu: English, with a few well-known French words (bon appétit, merci, voilà, oui chef)
 - Diet: no pork on the menu
-- Website: __SITE__/
+- Website: __SITE__/ (English), __SITE__/sv/ (Swedish)
 - Instagram: https://www.instagram.com/frenchpouletclub/ (@frenchpouletclub)
 - TikTok: https://www.tiktok.com/@frenchpouletclub (@frenchpouletclub)
 
